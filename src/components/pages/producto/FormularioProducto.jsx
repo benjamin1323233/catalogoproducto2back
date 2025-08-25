@@ -1,16 +1,35 @@
+import { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router";
 import Swal from 'sweetalert2'
 
-const FormularioProducto = ({ crearProducto }) => {
+const FormularioProducto = ({ crearProducto,buscarProducto,titulo, editarProducto }) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    setValue
   } = useForm();
 
+ const{id}=useParams()
+
+ useEffect(()=>{
+if(titulo ==="editar producto"){
+  const productoBuscado=buscarProducto(id)
+  console.log(productoBuscado)
+  setValue("nombreProducto",productoBuscado.nombreProducto)
+  setValue("precio",productoBuscado.precio)
+  setValue("imagen",productoBuscado.imagen)
+  setValue("categoria",productoBuscado.categoria)
+  setValue("descripcion_breve",productoBuscado.descripcionBreve)
+  setValue("descripcion_amplia",productoBuscado.descripcionAmplia)
+}
+ },[])
+
   const onSubmit = (producto) => {
+    if(titulo ==="crear producto"){
     console.log(producto);
     //crear el producto nuevo
     if (crearProducto(producto)) {
@@ -22,11 +41,20 @@ const FormularioProducto = ({ crearProducto }) => {
       //resetear el formulario
       reset();
     }
-  };
+    } else {
+    if(editarProducto(id, producto)) {
+      Swal.fire({
+        title: "Producto creado",
+        text: `El producto ${producto.nombreProducto} fue creado correctamente.`,
+        icon: "success",
+      });
+    }
+  }
+};
 
   return (
     <section className="container mainSection">
-      <h1 className="display-4 mt-5">Nuevo producto</h1>
+      <h1 className="display-4 mt-5">{titulo} </h1>
       <hr />
       <Form className="my-4" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="formNombreProdcuto">
@@ -105,8 +133,8 @@ const FormularioProducto = ({ crearProducto }) => {
             <option value="">Seleccione una opcion</option>
             <option value="Infusiones">Infusiones</option>
             <option value="Batidos">Batidos</option>
-            <option value="dulce">Dulce</option>
-            <option value="salado">Salado</option>
+            <option value="Dulce">Dulce</option>
+            <option value="Salado">Salado</option>
           </Form.Select>
           <Form.Text className="text-danger">
             {errors.categoria?.message}
