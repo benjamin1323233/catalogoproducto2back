@@ -54,7 +54,7 @@ const obtenerProductosback =async()=>{
         </thead>
         <tbody>
           {
-            listaProductos.map((producto, indice)=><ItemProducto key={producto._id} producto={producto} fila={indice + 1} borrarProducto={borrarProducto}></ItemProducto>)
+            listaProductos.map((producto, indice)=><ItemProducto key={producto._id} producto={producto} fila={indice + 1} borrarProducto={borrarProducto} setlistaProductos={setlistaProductos}></ItemProducto>)
           }
         </tbody>
       </Table>
