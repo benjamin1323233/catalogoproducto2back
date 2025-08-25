@@ -3,8 +3,9 @@ import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
 import Swal from 'sweetalert2'
+import { CrearProducto } from "../../../../helpers/queries";
 
-const FormularioProducto = ({ crearProducto,buscarProducto,titulo, editarProducto }) => {
+const FormularioProducto = ({ buscarProducto,titulo, editarProducto }) => {
   const {
     register,
     handleSubmit,
@@ -28,11 +29,12 @@ if(titulo ==="editar producto"){
 }
  },[])
 
-  const onSubmit = (producto) => {
+  const onSubmit = async(producto) => {
     if(titulo ==="crear producto"){
-    console.log(producto);
     //crear el producto nuevo
-    if (crearProducto(producto)) {
+    const respuesta = await CrearProducto(producto)
+
+    if (respuesta.status===201) {
       Swal.fire({
         title: "Producto creado",
         text: `El producto ${producto.nombreProducto} fue creado correctamente.`,
@@ -40,7 +42,7 @@ if(titulo ==="editar producto"){
       });
       //resetear el formulario
       reset();
-    }
+    }//pueden agregar un else con un mensaje de errror
     } else {
     if(editarProducto(id, producto)) {
       Swal.fire({
