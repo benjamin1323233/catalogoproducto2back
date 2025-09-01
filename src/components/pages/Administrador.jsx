@@ -2,8 +2,26 @@ import { Button, Table } from "react-bootstrap";
 import ItemProducto from "./producto/ItemProducto";
 import { productosData } from "../../data/productosPrueba";
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { leerProductos } from "../../../helpers/queries";
 
 const Administrador = ({ setProductos, productos, borrarProducto }) => {
+
+ const [listaProductos,setlistaProductos]=useState([])
+
+ useEffect(()=>{
+  obtenerProductosback()
+ },[])
+
+const obtenerProductosback =async()=>{
+  const respuesta = await leerProductos()
+  if(respuesta.status === 200){
+    const datos = await respuesta.json()
+    setlistaProductos(datos)
+  }else{
+    console.info("ocurrio un error al buscar los productos")
+  }
+}
 
   const cargarProductosPrueba = ()=>{
     // cargar datos de prueba
@@ -36,7 +54,7 @@ const Administrador = ({ setProductos, productos, borrarProducto }) => {
         </thead>
         <tbody>
           {
-            productos.map((producto, indice)=><ItemProducto key={producto.id} producto={producto} fila={indice + 1} borrarProducto={borrarProducto}></ItemProducto>)
+            listaProductos.map((producto, indice)=><ItemProducto key={producto._id} producto={producto} fila={indice + 1} borrarProducto={borrarProducto} setlistaProductos={setlistaProductos}></ItemProducto>)
           }
         </tbody>
       </Table>

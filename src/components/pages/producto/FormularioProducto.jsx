@@ -1,64 +1,90 @@
 import { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router";
-import Swal from "sweetalert2";
-
-const FormularioProducto = ({ crearProducto, titulo, buscarProducto, editarProducto }) => {
+import { useNavigate, useParams } from "react-router";
+import Swal from 'sweetalert2'
+import { CrearProducto } from "../../../../helpers/queries";
+import { obtenerProductoPorId } from "../../../../helpers/queries";
+import { editarProducto } from "../../../../helpers/queries";
+const FormularioProducto = ({ buscarProducto,titulo }) => {
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    setValue,
+    setValue
   } = useForm();
-  const { id } = useParams();
+ const navegacion = useNavigate()
+ 
+ const{id}=useParams()
 
-  useEffect(() => {
-    //verificar si estoy editando
-    if (titulo === "Editar producto") {
-      //busco el producto por id y lo dibujo en el formulario
-      const productoBuscado = buscarProducto(id);
-      console.log(productoBuscado);
-      setValue("nombreProducto", productoBuscado.nombreProducto);
-      setValue("precio", productoBuscado.precio);
-      setValue("imagen", productoBuscado.imagen);
-      setValue("descripcion_breve", productoBuscado.descripcion_breve);
-      setValue("descripcion_amplia", productoBuscado.descripcion_amplia);
-      setValue("categoria", productoBuscado.categoria);
+const obtenerProducto=async()=>{
+  if(titulo ==="editar producto"){
+    const respuesta = await obtenerProductoPorId(id)
+    if(respuesta.status===200){
+    const productoBuscado= await respuesta.json()
+  console.log(productoBuscado)
+  setValue("nombreProducto",productoBuscado.nombreProducto)
+  setValue("precio",productoBuscado.precio)
+  setValue("imagen",productoBuscado.imagen)
+  setValue("categoria",productoBuscado.categoria)
+  setValue("descripcion_breve",productoBuscado.descripcion_breve)
+  setValue("descripcion_amplia",productoBuscado.descripcion_amplia)
+  }
+  }
+  }
+
+ useEffect(()=>{
+
+  //modificacion de back
+  obtenerProducto()
+ },[])
+
+  const onSubmit = async (producto) => {
+  if (titulo === "crear producto") {
+    // crear el producto nuevo
+    const respuesta = await CrearProducto(producto);
+
+    if (respuesta && respuesta.status === 201) {
+      Swal.fire({
+        title: "Producto creado",
+        text: `El producto ${producto.nombreProducto} fue creado correctamente.`,
+        icon: "success",
+      });
+      navegacion("/administrador")
+      // resetear el formulario
+      reset();
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "No se pudo crear el producto.",
+        icon: "error",
+      });
     }
-  }, []);
-
-  console.log(id);
-
-  const onSubmit = (producto) => {
-    if (titulo === "Crear producto") {
-      console.log(producto);
-      //crear el producto nuevo
-      if (crearProducto(producto)) {
-        Swal.fire({
-          title: "Producto creado",
-          text: `El producto ${producto.nombreProducto} fue creado correctamente.`,
-          icon: "success",
-        });
-        //resetear el formulario
-        reset();
-      }
-    }else{
-      //tomar los del formulario 'producto'
-      if(editarProducto(id, producto)){
-          Swal.fire({
-          title: "Producto editado",
-          text: `El producto ${producto.nombreProducto} fue editado correctamente.`,
-          icon: "success",
-        });
-      }
+  } else {
+    // editar el producto existente
+    const respuesta = await editarProducto(producto, id);
+console.log("Status:", respuesta.status);
+    if (respuesta.status === 200) {
+      Swal.fire({
+        title: "Producto editado",
+        text: `El producto ${producto.nombreProducto} fue editado correctamente.`,
+        icon: "success",
+      });
+      navegacion("/administrador")
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "No se pudo editar el producto.",
+        icon: "error",
+      });
     }
-  };
+  }
+};
 
   return (
     <section className="container mainSection">
-      <h1 className="display-4 mt-5">{titulo}</h1>
+      <h1 className="display-4 mt-5">{titulo} </h1>
       <hr />
       <Form className="my-4" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="formNombreProdcuto">
