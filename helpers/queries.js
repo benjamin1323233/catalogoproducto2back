@@ -1,15 +1,21 @@
 //get,post,put,delete
 const urlProductos= import.meta.env.VITE_API_PRODUCTOS
 console.log(urlProductos)
-export const leerProductos=async()=>{
-    try{
-const respuesta = await fetch(urlProductos)
-return respuesta
-    }catch(error){
-console.log(error)
-return null
+export const leerProductos = async () => {
+  try {
+    const respuesta = await fetch(urlProductos);
+
+    if (!respuesta.ok) {
+      throw new Error("Error HTTP: " + respuesta.status);
     }
-}
+
+    const datos = await respuesta.json(); // <-- acá convertís la respuesta en JSON
+    return datos;
+  } catch (error) {
+    console.error("Error en leerProductos:", error);
+    return null;
+  }
+};
 
 export const obtenerProductoPorId =async(id)=>{
     try{
