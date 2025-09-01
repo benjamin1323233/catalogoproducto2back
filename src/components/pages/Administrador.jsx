@@ -1,5 +1,4 @@
-import Button from "react-bootstrap";
-import Table from "react-bootstrap"
+import { Button, Table } from "react-bootstrap";
 import ItemProducto from "./producto/ItemProducto";
 import { productosData } from "../../data/productosPrueba";
 import { Link } from "react-router";
