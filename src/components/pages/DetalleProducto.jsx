@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
 import {useParams} from "react-router"
-import {useEffect,useState} from "react"
+
 const DetalleProducto = ({buscarProducto}) => {
   const{id}=useParams()
 const [producto,setProducto]=useState({})
