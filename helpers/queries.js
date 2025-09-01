@@ -3,18 +3,21 @@ const urlProductos= import.meta.env.VITE_API_PRODUCTOS
 console.log(urlProductos)
 export const leerProductos = async () => {
   try {
-    const respuesta = await fetch("https://backend-cafe-xi.vercel.app/api/productos");
+    const respuesta = await fetch(urlProductos);
+    
     if (!respuesta.ok) {
-      console.error("Error en la respuesta:", respuesta.status);
-      return null;
+      throw new Error("Error en la respuesta del servidor: " + respuesta.status);
     }
-    const data = await respuesta.json(); // convierte la respuesta a JSON
-    return data; // ahora devuelve un array de productos
+
+    const datos = await respuesta.json(); // 👈 parseamos aquí
+    return datos; // 👈 retornamos el array de productos
+
   } catch (error) {
     console.error("Ocurrió un error al buscar los productos:", error);
     return null;
   }
 };
+
 
 
 export const obtenerProductoPorId =async(id)=>{

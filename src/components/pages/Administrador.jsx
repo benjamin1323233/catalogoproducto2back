@@ -9,19 +9,19 @@ const Administrador = ({ setProductos, productos, borrarProducto }) => {
 
  const [listaProductos,setlistaProductos]=useState([])
 
- useEffect(()=>{
-  obtenerProductosback()
- },[])
+ useEffect(() => {
+  obtenerProductosback();
+}, []);
 
-const obtenerProductosback =async()=>{
-  const respuesta = await leerProductos()
-  if(respuesta.status === 200){
-    const datos = await respuesta.json()
-    setlistaProductos(datos)
-  }else{
-    console.info("ocurrio un error al buscar los productos")
+const obtenerProductosback = async () => {
+  const datos = await leerProductos(); // leerProductos ya devuelve JSON
+  if (datos) {
+    setlistaProductos(datos);
+  } else {
+    console.info("ocurrio un error al buscar los productos");
   }
-}
+};
+
 
   const cargarProductosPrueba = ()=>{
     // cargar datos de prueba
