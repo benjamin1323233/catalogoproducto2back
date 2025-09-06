@@ -1,21 +1,37 @@
 import { Container, Row, Form } from "react-bootstrap";
 import CardProducto from "./producto/CardProducto";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { leerProductos } from "../../../helpers/queries";
 
-const Inicio = ({ productos }) => {
+const Inicio = () => {
   const [terminoBusqueda, setTerminoBusqueda] = useState("");
+  const [listaProductos, setListaProductos] = useState([]);
+
+  useEffect(() => {
+    obtenerProductosback();
+  }, []);
+
+  const obtenerProductosback = async () => {
+    const datos = await leerProductos();
+    if (datos) {
+      setListaProductos(datos);
+    } else {
+      console.info("ocurrio un error al buscar los productos");
+    }
+  };
+
 
   const handleInputChange = (e) => {
     console.log(e.target.value);
     setTerminoBusqueda(e.target.value);
   };
-
-  const productosFiltrados = productos.filter((producto) =>
+/*
+  const productosFiltrados = listaProductos.filter((producto) =>
     producto.nombreProducto
       .toLowerCase()
       .includes(terminoBusqueda.toLowerCase())
   );
-
+*/
   return (
     <section className="mainSection">
       <img
@@ -38,10 +54,10 @@ const Inicio = ({ productos }) => {
           </Form.Group>
         </Form>
         <Row>
-          {productosFiltrados.length > 0 ? (
-            productosFiltrados.map((producto) => (
+          {listaProductos.length > 0 ? (
+            listaProductos.map((producto) => (
               <CardProducto
-                key={producto.id}
+                key={producto._id}
                 producto={producto}
               ></CardProducto>
             ))
