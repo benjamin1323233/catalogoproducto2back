@@ -74,7 +74,7 @@ return true
         ></Menu>
         <main>
           <Routes>
-            <Route path="/" element={<Inicio productos={productos}/>}></Route>
+            <Route path="/" element={<Inicio/>}></Route>
             <Route
               path="/detalle/:id"
               element={<DetalleProducto buscarProducto={buscarProducto}></DetalleProducto>}
@@ -87,7 +87,7 @@ return true
               path="/administrador"
               element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}
             >
-              <Route index element={<Administrador setProductos={setProductos} productos={productos} borrarProducto={borrarProducto}></Administrador>}></Route>
+              <Route index element={<Administrador setProductos={setProductos} borrarProducto={borrarProducto}></Administrador>}></Route>
               <Route path="crear" element={<FormularioProducto titulo={"crear producto"} crearProducto={crearProducto} editarProducto={editarProducto} ></FormularioProducto>}></Route>
               <Route path="editar/:id" element={<FormularioProducto titulo={"editar producto"} buscarProducto={buscarProducto} editarProducto={editarProducto}></FormularioProducto>}></Route>
             </Route>
