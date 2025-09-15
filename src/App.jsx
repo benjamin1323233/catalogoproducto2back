@@ -24,6 +24,10 @@ function App() {
     localStorage.setItem('catalogoProductos', JSON.stringify(productos))
   }, [productos])
 
+   useEffect(()=>{
+    sessionStorage.setItem('userkey', JSON.stringify(usuarioAdmin))
+  }, [productos])
+
   const crearProducto = (productoNuevo)=>{
     //agregar un id unico al producto Nuevo
     productoNuevo.id = uuidv4();
