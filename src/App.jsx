@@ -25,8 +25,8 @@ function App() {
   }, [productos])
 
    useEffect(()=>{
-    sessionStorage.setItem('userkey', JSON.stringify(usuarioAdmin))
-  }, [productos])
+    sessionStorage.setItem('userKey', JSON.stringify(usuarioAdmin))
+  }, [usuarioAdmin])
 
   const crearProducto = (productoNuevo)=>{
     //agregar un id unico al producto Nuevo

@@ -6,7 +6,7 @@ const Menu = ({ usuarioAdmin, setUsuarioAdmin }) => {
 const navegacion = useNavigate()
 
   const logout = ()=>{
-    setUsuarioAdmin(false)
+    setUsuarioAdmin({})
     sessionStorage.removeItem('userKey')
     navegacion('/')
   }
@@ -28,7 +28,7 @@ const navegacion = useNavigate()
             <NavLink className="nav-link" to={"/"}>
               Inicio
             </NavLink>
-            {usuarioAdmin ? (
+            {usuarioAdmin.token ? (
               <>
                 <NavLink className="nav-link" to={"/administrador"}>
                   Administrador

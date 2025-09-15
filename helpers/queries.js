@@ -52,17 +52,23 @@ console.log(error)
 return null
     }
 }
+//en clase lo verde, abajo lo que funciona
+
 export const BorrarProductoid=async(id)=>{
     try{
 const respuesta = await fetch(urlProductos+`/${id}`,{
-method:"DELETE"
+method:"DELETE",
+headers:{
+        "x-token":JSON.parse(sessionStorage.getItem("userKey")).token
+    },
 })
 return respuesta
     }catch(error){
 console.log(error)
-return null
+return 500
     }
 }
+
 export const Loginuser=async(datosUsuario)=>{
     try{
 const respuesta = await fetch(urlusuarios+"/login",{
@@ -78,3 +84,4 @@ console.log(error)
 return null
     }
 }
+
