@@ -63,7 +63,7 @@ const obtenerProducto=async()=>{
   } else {
     // editar el producto existente
     const respuesta = await editarProducto(producto, id);
-console.log("Status:", respuesta.status);
+
     if (respuesta.status === 200) {
       Swal.fire({
         title: "Producto editado",

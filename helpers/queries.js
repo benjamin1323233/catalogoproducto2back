@@ -6,7 +6,7 @@ export const leerProductos=async()=>{
 const respuesta = await fetch(urlProductos)
 return respuesta
     }catch(error){
-console.log(error)
+console.error(error)
 return null
     }
 }
@@ -15,7 +15,7 @@ export const obtenerProductoPorId =async(id)=>{
 const respuesta = await fetch(urlProductos+`/${id}`)
 return respuesta
     }catch(error){
-console.log(error)
+console.error(error)
 return null
     }
 }
@@ -31,7 +31,7 @@ const respuesta = await fetch(urlProductos,{
 })
 return respuesta
     }catch(error){
-console.log(error)
+console.error(error)
 return null
     }
 }
@@ -49,7 +49,7 @@ method:"PUT",
 
 return respuesta
     }catch(error){
-console.log(error)
+console.error(error)
 return null
     }
 }
@@ -65,7 +65,7 @@ headers:{
 })
 return respuesta
     }catch(error){
-console.log(error)
+console.error(error)
 return 500
     }
 }
@@ -81,7 +81,7 @@ const respuesta = await fetch(urlusuarios+"/login",{
 })
 return respuesta
     }catch(error){
-console.log(error)
+console.error(error)
 return null
     }
 }

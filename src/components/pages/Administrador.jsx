@@ -1,6 +1,5 @@
 import { Button, Table } from "react-bootstrap";
 import ItemProducto from "./producto/ItemProducto";
-import { productosData } from "../../data/productosPrueba";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { leerProductos } from "../../../helpers/queries";
