@@ -54,9 +54,11 @@ const obtenerProducto=async()=>{
       // resetear el formulario
       reset();
     } else {
+      const datosErroneos = await respuesta.json()
+      
       Swal.fire({
         title: "Error",
-        text: "No se pudo crear el producto.",
+        text: "el producto "+producto.nombreProducto+" no puso ser creado "+datosErroneos[0].msg,
         icon: "error",
       });
     }
@@ -72,9 +74,11 @@ const obtenerProducto=async()=>{
       });
       navegacion("/administrador")
     } else {
+      const datosErroneos = await respuesta.json()
+      
       Swal.fire({
         title: "Error",
-        text: "No se pudo editar el producto.",
+        text: "el producto "+producto.nombreProducto+" no puso ser editado "+datosErroneos[0].msg,
         icon: "error",
       });
     }
