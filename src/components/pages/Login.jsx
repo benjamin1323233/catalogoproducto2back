@@ -15,7 +15,7 @@ const Login = ({ setUsuarioAdmin }) => {
     const respuesta = await Loginuser(usuario);
     if (respuesta.status === 200) {
       const datosUsuarios = await respuesta.json();
-      console.log(datosUsuarios);
+
       ///actualizar el state usuarioadmin
       setUsuarioAdmin({nombreUsuario:datosUsuarios.nombreUsuario,token:datosUsuarios.token})
       //guardar los datos en el sessionstorage

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import { CrearProducto } from "../../../../helpers/queries";
 import { obtenerProductoPorId } from "../../../../helpers/queries";
 import { editarProducto } from "../../../../helpers/queries";
-const FormularioProducto = ({ buscarProducto,titulo }) => {
+const FormularioProducto = ({titulo }) => {
   const {
     register,
     handleSubmit,
@@ -23,7 +23,6 @@ const obtenerProducto=async()=>{
     const respuesta = await obtenerProductoPorId(id)
     if(respuesta.status===200){
     const productoBuscado= await respuesta.json()
-  console.log(productoBuscado)
   setValue("nombreProducto",productoBuscado.nombreProducto)
   setValue("precio",productoBuscado.precio)
   setValue("imagen",productoBuscado.imagen)
